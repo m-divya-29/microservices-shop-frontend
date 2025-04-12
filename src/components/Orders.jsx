@@ -1,5 +1,6 @@
 import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
+import Logout from "../auth/Logout";
 
 // A component that shows all orders
 const mockOrders = [
@@ -64,6 +65,7 @@ export default function Orders() {
           ))}
         </tbody>
       </table>
+      <Logout />
     </>
   );
 }
