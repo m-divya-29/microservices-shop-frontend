@@ -1,6 +1,7 @@
 import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 import Logout from "../auth/Logout";
+import AddOrders from "./AddOrders";
 
 // A component that shows all orders
 const mockOrders = [
@@ -25,7 +26,7 @@ export default function Orders() {
   const { keycloak } = useKeycloak();
 
   // this function updates the values(read from ordersValues)
-  useEffect(() => {
+  useEffect(() => { // useEffect() it executes on page load as there are no dependencies to it.
     // setOrdersValues(mockOrders);
     fetch("http://localhost:9000/api/order", {
       headers: {
@@ -38,7 +39,7 @@ export default function Orders() {
         setOrdersValues(data);
       })
       .catch((error) => setOrdersValues([]));
-  }, []);
+  }, []); // no dependencies, hence []
 
   return (
     <>
@@ -65,6 +66,9 @@ export default function Orders() {
           ))}
         </tbody>
       </table>
+      <div>
+        <AddOrders />
+      </div>
       <Logout />
     </>
   );
