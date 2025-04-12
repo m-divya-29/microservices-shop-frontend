@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 // A component that shows all orders
 const mockOrders = [
   {
@@ -15,22 +17,34 @@ const mockOrders = [
     quantity: 2,
   },
 ];
+
 export default function Orders() {
+  const [ordersValues, setOrdersValues] = useState([]); // if no orders, empty [] default.
+  // this function updates the values(read from ordersValues)
+  useEffect(() => {
+    // setOrdersValues(mockOrders);
+    fetch("http://localhost:9000/api/order").then((response) => {
+        const data = response.json();
+        setOrdersValues(data)
+    }).catch((error) => setOrdersValues([])) 
+  }, []);
+
   return (
     <>
       <table>
         <thead>
-            <tr>
+          <tr>
             <th>id</th>
             <th>orderNumber</th>
             <th>skuCode</th>
             <th>price</th>
             <th>quantity</th>
-            </tr>
+          </tr>
         </thead>
         <tbody>
-          {mockOrders.map((mockOrder) => (
-            <tr key = {mockOrder.id}>{/* Each child in a list should have a unique "key" prop. */}
+          {ordersValues.map((mockOrder) => (
+            <tr key={mockOrder.id}>
+              {/* Each child in a list should have a unique "key" prop. */}
               <td> {mockOrder.id} </td>
               <td> {mockOrder.orderNumber} </td>
               <td> {mockOrder.skuCode} </td>
