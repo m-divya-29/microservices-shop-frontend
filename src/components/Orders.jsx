@@ -1,3 +1,4 @@
+import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 
 // A component that shows all orders
@@ -20,13 +21,22 @@ const mockOrders = [
 
 export default function Orders() {
   const [ordersValues, setOrdersValues] = useState([]); // if no orders, empty [] default.
+  const { keycloak } = useKeycloak();
+
   // this function updates the values(read from ordersValues)
   useEffect(() => {
     // setOrdersValues(mockOrders);
-    fetch("http://localhost:9000/api/order").then((response) => {
-        const data = response.json();
-        setOrdersValues(data)
-    }).catch((error) => setOrdersValues([])) 
+    fetch("http://localhost:9000/api/order", {
+      headers: {
+        authorization: `Bearer ${keycloak.token}`,
+      },
+    })
+      .then(async (response) => {
+        const data = await response.json();
+        console.log(data);
+        setOrdersValues(data);
+      })
+      .catch((error) => setOrdersValues([]));
   }, []);
 
   return (
