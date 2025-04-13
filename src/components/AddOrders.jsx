@@ -58,7 +58,7 @@ export default function AddOrders() {
         {allProducts.map((prod) => (
           <div key={prod.id}>
             <p>
-            {prod.id}  {prod.name} ${prod.price}
+              {prod.name} ${prod.price}
             </p>
             <input
               type="number"

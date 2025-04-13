@@ -26,7 +26,8 @@ export default function Orders() {
   const { keycloak } = useKeycloak();
 
   // this function updates the values(read from ordersValues)
-  useEffect(() => { // useEffect() it executes on page load as there are no dependencies to it.
+  useEffect(() => {
+    // useEffect() it executes on page load as there are no dependencies to it.
     // setOrdersValues(mockOrders);
     fetch("http://localhost:9000/api/order", {
       headers: {
@@ -43,29 +44,31 @@ export default function Orders() {
 
   return (
     <>
+      <h2>Previous orders</h2>
       <table>
         <thead>
           <tr>
             <th>id</th>
-            <th>orderNumber</th>
+            {/* <th>orderNumber</th> */}
             <th>skuCode</th>
             <th>price</th>
             <th>quantity</th>
           </tr>
         </thead>
         <tbody>
-          {ordersValues.map((mockOrder) => (
-            <tr key={mockOrder.id}>
+          {ordersValues.map((order) => (
+            <tr key={order.id}>
               {/* Each child in a list should have a unique "key" prop. */}
-              <td> {mockOrder.id} </td>
-              <td> {mockOrder.orderNumber} </td>
-              <td> {mockOrder.skuCode} </td>
-              <td> {mockOrder.price} </td>
-              <td> {mockOrder.quantity} </td>
+              <td> {order.id} </td>
+              {/* <td> {mockOrder.orderNumber} </td> */}
+              <td> {order.skuCode} </td>
+              <td> {order.price} </td>
+              <td> {order.quantity} </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <hr></hr>
       <div>
         <AddOrders />
       </div>
